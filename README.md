@@ -36,7 +36,11 @@ All microservices are managed by a CloudFormation script and are hosted on EC2 i
 
 # Challenges
 
+### HAProxy configuration
+
 HAProxy configuration needs to be updated each time a new microservice gets added or removed to the pool. We managed to have this setup in place without losing requests but as it is now it's cumbersome and could not be easily replicated in a small amount of time.
+
+### Getting the code
 
 We have two distinct ways of getting the code on the microservice
 
@@ -45,3 +49,19 @@ We have two distinct ways of getting the code on the microservice
 
 This probably leads to duplication and unneeded complexity, we might want to have this as one process.
 Also there's the Go server configuration that has to be done each time for a new deploy process.
+
+### Multiple services needing the same request
+
+There seems to be the need for a new service that orchestrates the message passing to the services, so that for example one single request gets routed to the correct endpoints.
+
+### One separated table for each domain
+
+Each time it has to be created and monitored for exceeded throughput.
+
+### Boilerplate 
+
+Code that needs to be there so for example authentication, basic routes like `/status` and `/version` and database interaction custom code.
+
+### Cloudformation
+
+See "Getting the code" above, each new microservice need a new cloudformation script.
